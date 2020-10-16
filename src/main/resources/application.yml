@@ -17,3 +17,16 @@ management:
     web:
       exposure:
         include: hystrix.stream
+
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAJF2FHSSU7QJJMHXA
+      secretKey: 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
+    s3:
+      bucket: heythere-file-store
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+

@@ -20,19 +20,24 @@ public class User extends BaseTimeEntity {
     private String email;
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "target_user_id")
-    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "targer_user_id", referencedColumnName = "user_id")
+    private User targetUser;
 
-    @OneToMany(mappedBy = "user")
-    private List<User> subscriber = new ArrayList<>();
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(name = "target_user_id")
+    private List<User> subscribers = new ArrayList<>();
 
     @Builder
-    public User(Long id, String email, String name, User user, List<User> subscriber) {
+    public User(Long id, String email, String name, User targetUser, List<User> subscribers) {
         this.id = id;
         this.email = email;
         this.name = name;
-        this.user = user;
-        this.subscriber = subscriber;
+        this.targetUser = targetUser;
+        this.subscribers = subscribers;
     }
 }
