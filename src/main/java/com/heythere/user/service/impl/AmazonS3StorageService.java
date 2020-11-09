@@ -10,6 +10,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.heythere.user.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,7 +40,7 @@ public class AmazonS3StorageService {
 
     @PostConstruct
     public void setS3Client() {
-        AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
+        final AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
 
         amazonS3Client = AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
@@ -51,7 +52,7 @@ public class AmazonS3StorageService {
         return upload(convert(file).get(), user, dirName);
     }
 
-    public String upload(final File uploadFile, final User user, final String dirName) {
+    private String upload(final File uploadFile, final User user, final String dirName) {
         final String fileName = dirName + "/" + user.getId() + "-" + user.getEmail() + "-" + uploadFile.getName();
         final String uploadImageUrl = putS3(uploadFile, fileName);
         removeNewFile(uploadFile);

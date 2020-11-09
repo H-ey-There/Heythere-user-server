@@ -12,10 +12,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableHystrixDashboard
 @EnableJpaAuditing
 @SpringBootApplication
-public class UserApplication {
-
-    public static void main(String[] args) {
+public class UserApplication  {
+    public static void main(String... args) {
         SpringApplication.run(UserApplication.class, args);
     }
-
 }
